@@ -1,53 +1,23 @@
-name: Deploy to Production Server
-
-on:
-  push:
-    branches: [ main ]
-
+on: push
+name: 🚀 Deploy website on push
 jobs:
-  deploy:
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v3
       
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
+    - name: 🔨 Build Project
+      run: |
+        npm install
+        npm run build
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        node-version: '18'
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Build project
-      run: npm run build
-      
-    - name: Setup SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H 31.31.196.170 >> ~/.ssh/known_hosts
-        
-    - name: Deploy to server
-      run: |
-        # Создание архива с билдом
-        tar -czf build.tar.gz -C build .
-        
-        # Копирование архива на сервер
-        scp build.tar.gz ${{ secrets.REG_LOGIN }}@31.31.196.170:/tmp/
-        
-        # Распаковка и деплой на сервере
-        ssh ${{ secrets.REG_LOGIN }}@31.31.196.170 << 'EOF'
-          mkdir -p www/ds.ru
-          tar -xzf /tmp/build.tar.gz -C www/ds.ru
-          rm /tmp/build.tar.gz
-          echo "Деплой завершен успешно!"
-        EOF
-        
-    - name: Deploy success notification
-      run: |
-        echo "✅ Деплой успешно завершен!"
-        echo "🌐 Сайт доступен по адресу: http://31.31.196.170/ds.ru"
+        server: 31.31.196.170
+        username: ${{ secrets.REG_LOGIN }}
+        password: ${{ secrets.REG_PASS }}
+        local-dir: ./build/
+        server-dir: /www/ds.ru/
