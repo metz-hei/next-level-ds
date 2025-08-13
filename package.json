@@ -48,7 +48,7 @@
   },
   "lint-staged": {
     "*.{md,mdx}": [
-      "markdownlint --fix"
+      "markdownlint"
     ]
   }
 }

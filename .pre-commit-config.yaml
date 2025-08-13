@@ -3,7 +3,6 @@ repos:
     rev: v0.38.0
     hooks:
       - id: markdownlint
-        args: [--fix]
         files: \.(md|mdx)$
         exclude: |
           (?x)^(
