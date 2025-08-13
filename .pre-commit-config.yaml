@@ -1,0 +1,23 @@
+repos:
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.38.0
+    hooks:
+      - id: markdownlint
+        files: \.(md|mdx)$
+        exclude: |
+          (?x)^(
+              node_modules/|
+              build/|
+              \.docusaurus/|
+              package-lock\.json
+          )$
+
+  - repo: https://github.com/streetsidesoftware/cspell
+    rev: v8.14.2
+    hooks:
+      - id: cspell
+        name: cspell
+        files: \.(md|mdx)$
+        args: ["--config", "cspell.json", "--no-progress", "--color"]
+        additional_dependencies:
+          - "@cspell/dict-ru_ru"
