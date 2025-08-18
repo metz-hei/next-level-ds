@@ -52,6 +52,7 @@
   },
   "lint-staged": {
     "**/*.md": [
+      "vale",
       "markdownlint",
       "cspell --no-progress --no-summary --no-must-find-files"
     ]
