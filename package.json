@@ -26,6 +26,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "cspell": "^8.15.0",
     "@cspell/dict-ru_ru": "^2.3.2",
     "@docusaurus/module-type-aliases": "3.8.1",
     "@docusaurus/types": "3.8.1",
@@ -50,6 +51,9 @@
     "node": ">=18.0"
   },
   "lint-staged": {
-    "**/*.md": "markdownlint"
+    "**/*.md": [
+      "markdownlint",
+      "cspell --no-progress --no-summary --no-must-find-files"
+    ]
   }
 }
