@@ -5,6 +5,7 @@
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
 import {themes as prismThemes} from 'prism-react-renderer';
+import remarkTypograf from '@mavrin/remark-typograf';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -46,14 +47,25 @@ const config = {
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
+        pages: {
+          remarkPlugins: [
+            [remarkTypograf, {locale: ['ru']}],
+          ],
+        },
         docs: {
           sidebarPath: './sidebars.js',
+          remarkPlugins: [
+            [remarkTypograf, {locale: ['ru']}],
+          ],
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         blog: {
+          remarkPlugins: [
+            [remarkTypograf, {locale: ['ru']}],
+          ],
           showReadingTime: true,
           feedOptions: {
             type: ['rss', 'atom'],
